@@ -419,12 +419,12 @@ object containing session specifications.
             }
         ]
 
-## Session Prospect Details [/sessions/{session_id}/prospects]
+## Session Prospects [/sessions/{session_id}/prospects]
 
 + Parameters
     + session_id (GUID) - ID of the Session in the form of an GUID
 
-### Add Prospects to Session [POST]
+### Add Prospects to a Session [POST]
 
 + Request (application/json)
 
@@ -534,7 +534,7 @@ object containing session specifications.
             }    
             
 
-### Delete Prospects from Session [DELETE]
+### Delete Prospects from a Session [DELETE]
 
 + Request (application/json)
 
@@ -784,7 +784,7 @@ object containing session specifications.
 + Parameters
     + session_id (GUID) - ID of the Session in the form of an GUID
 
-### Session Interactions [GET]
+### Get Interactions in a Session [GET]
 + Response 200 (application/json)
 
             [
@@ -835,7 +835,7 @@ object containing session specifications.
 
 ## Interactions [/interactions]
 
-### Interactions [GET]
+### Get Interactions [GET]
 + Response 200 (application/json)
 
             [

@@ -687,7 +687,7 @@ object containing session specifications.
                 ]
             }
 
-## Session Control [/sessions/{session_id}/control]
+## Session Control [/sessions/{session_id}/controls]
 
 + Parameters
     + session_id (GUID) - ID of the Session in the form of an GUID
@@ -710,11 +710,12 @@ object containing session specifications.
             {
                 "id": 1,
                 "started_at": "2016-10-17T09:30:00.000Z",
+                "restarted_at": [""],
                 "ended_at": "",
                 "state": "started"
             }
 
-## Session Stop/Restart [/sessions/{session_id}/control/{control_id}]
+## Session Stop/Restart [/sessions/{session_id}/controls/{control_id}]
 
 + Parameters
     + session_id (GUID) - ID of the Session in the form of an GUID
@@ -739,6 +740,7 @@ object containing session specifications.
             {
                 "id": 1,
                 "started_at": "2016-10-17T09:30:00.000Z",
+                "restarted_at": [""],
                 "ended_at": "2016-10-17T09:45:00.000Z",
                 "state": "stopped"
             }
@@ -760,7 +762,8 @@ object containing session specifications.
             {
                 "id": 1,
                 "started_at": "2016-10-17T09:30:00.000Z",
-                "ended_at": "2016-10-17T09:45:00.000Z",
+                "restarted_at": ["2016-10-17T09:45:00.000Z"],
+                "ended_at": "", 
                 "state": "started"
             }
 

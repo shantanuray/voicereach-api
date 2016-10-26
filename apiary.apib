@@ -406,6 +406,19 @@ object containing session specifications.
 + Parameters
     + session_id (GUID) - ID of the Session in the form of an GUID
 
++ Attributes
+    + id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string)  - The GUID of the interaction
+    + type: `live call navigator attempt` (string)  - Attempt type
+    + started_at: `2016-10-17T09:30:00.000Z` (string)  - Start date-time of the session
+    + stopped_at: `2016-10-17T10:30:00.000Z` (string)  - Stop date-time of the session
+    + status: completed (string)  - Status of the interaction [queued, connecting, ringing, answered, transferred, completed]
+    + prospect_id: `2c4acfd8-b7e5-4406-a0b9-73a3c4576f89` (string) - External Unique ID of prospect
+    + name: 123456789 (number) - Access code to login to session via VoiceReach conference bridge
+    + title: CEO (string) - Job title of prospect
+    + phone: +14087555678 (string) - Phone number dialed to connect with prospect
+    + company: ProviderTrust (string) - Name of company
+    + location: `Cupertino, CA` (string) - Location of prospect
+
 ### Get Interactions in a Session [GET]
 + Response 200 (application/json)
 
@@ -453,6 +466,18 @@ object containing session specifications.
         ]
 
 ## Interactions [/interactions]
++ Attributes
+    + id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string)  - The GUID of the interaction
+    + type: `live call navigator attempt` (string)  - Attempt type
+    + started_at: `2016-10-17T09:30:00.000Z` (string)  - Start date-time of the session
+    + stopped_at: `2016-10-17T10:30:00.000Z` (string)  - Stop date-time of the session
+    + status: completed (string)  - Status of the interaction [queued, connecting, ringing, answered, transferred, completed]
+    + prospect_id: `2c4acfd8-b7e5-4406-a0b9-73a3c4576f89` (string) - External Unique ID of prospect
+    + name: 123456789 (number) - Access code to login to session via VoiceReach conference bridge
+    + title: CEO (string) - Job title of prospect
+    + phone: +14087555678 (string) - Phone number dialed to connect with prospect
+    + company: ProviderTrust (string) - Name of company
+    + location: `Cupertino, CA` (string) - Location of prospect
 
 ### Get Interactions [GET]
 + Response 200 (application/json)

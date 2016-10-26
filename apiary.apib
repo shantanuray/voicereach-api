@@ -6,22 +6,34 @@ HOST: http://polls.apiblueprint.org/
 VoiceReach API will allow third party systems to run a VoiceReach dialer session
 
 ## Sessions Collection [/sessions]    
++ Attributes
+    + id: (string)          - The GUID of the session
+    + created_at: (string)  - Created date-time of the session
+    + started_at: (string)  - Start date-time of the session
+    + stopped_at: (string)  - Stop date-time of the session
+    + state: (string)       - State of the session ["not started", "started", "stopped"]
+    + instructions: (string)- Instructions for the VoiceReach call navigators
+    + access_code: (string) - Access code to login to session via VoiceReach conference bridge
+    + recording: (string)   - Recording flag ["true", "false"]
+    + call_back_url: (string)               - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
+    + call_back_events: (array[string])     - The call progress events that VoiceReach will send webhooks on. Available values are "queued", "connecting", "ringing", "answered", "transferred" and "completed"
+    + caller_id_type: (string)      - Method used by VoiceReach to set caller ID ["none", "fixed", "random-select", "prospect-location"]
+    + caller_id: (array[string])    - Caller IDs to be used as per caller_id_type
 
 ### List All Sessions [GET]
 
 + Response 200 (application/json)
-
         [
             {
                 "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
                 "created_at": "2016-10-17T08:40:51.620Z",
                 "started_at": "",
-                "ended_at": "",
+                "stopped_at": "",
                 "state": "not started",
                 "instructions": "Use this script",
                 "access_code": "123-456-789",
                 "recording": "true",
-                "call_back": "https://my.webapp.com",
+                "call_back_url": "https://my.webapp.com",
                 "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
                 "auto_repeat": "true",
                 "caller_id_type": "fixed",
@@ -38,12 +50,12 @@ VoiceReach API will allow third party systems to run a VoiceReach dialer session
                 "id": "a740f9fa-3185-459e-a365-2ed685e023fd",
                 "created_at": "2016-08-05T08:40:51.620Z",
                 "started_at": "2016-10-17T09:30:00.000Z",
-                "ended_at": "",
+                "stopped_at": "",
                 "state": "running",
                 "instructions": "Use this script",
                 "access_code": "123-456-789",
                 "recording": "false",
-                "call_back": "",
+                "call_back_url": "",
                 "call_back_events": [],
                 "auto_repeat": "false",
                 "caller_id_type": "random-select",
@@ -60,12 +72,12 @@ VoiceReach API will allow third party systems to run a VoiceReach dialer session
                 "id": "c73a0c52-fd97-4d69-be08-1cef5b88da66",
                 "created_at": "2015-08-05T08:40:51.620Z",
                 "started_at": "2015-08-05T09:30:00.000Z",
-                "ended_at": "2015-08-05T10:30:00.000Z",
+                "stopped_at": "2015-08-05T10:30:00.000Z",
                 "state": "stopped",
                 "instructions": "Use this script",
                 "access_code": "123-456-789",
                 "recording": "false",
-                "call_back": "",
+                "call_back_url": "",
                 "call_back_events": [],
                 "auto_repeat": "false",
                 "caller_id_type": "geo-select",
@@ -86,11 +98,20 @@ You may create your own session using this action. It takes a JSON
 object containing session specifications.
 
 + Request (application/json)
+    + Attributes
+        + instructions: (string)- Instructions for the VoiceReach call navigators
+        + access_code: (string) - Access code to login to session via VoiceReach conference bridge
+        + recording: (string)   - Recording flag ["true", "false"]
+        + call_back_url: (string)               - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
+        + call_back_events: (array[string])     - The call progress events that VoiceReach will send webhooks on. Available values are "queued", "connecting", "ringing", "answered", "transferred" and "completed"
+        + caller_id_type: (string)      - Method used by VoiceReach to set caller ID ["none", "fixed", "random-select", "prospect-location"]
+        + caller_id: (array[string])    - Caller IDs to be used as per caller_id_type
+    + Body
 
         {
             "instructions": "Use this script",
             "recording": "true",
-            "call_back": "https://my.webapp.com",
+            "call_back_url": "https://my.webapp.com",
             "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
             "auto_repeat": "true",
             "caller_id_type": "random-select",
@@ -109,12 +130,12 @@ object containing session specifications.
                 "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
                 "created_at": "2016-10-17T08:40:51.620Z",
                 "started_at": "",
-                "ended_at": "",
+                "stopped_at": "",
                 "state": "not started",
                 "instructions": "Use this script",
                 "access_code": "123-456-789",
                 "recording": "true",
-                "call_back": "https://my.webapp.com",
+                "call_back_url": "https://my.webapp.com",
                 "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
                 "auto_repeat": "true",
                 "caller_id_type": "random-select",
@@ -132,22 +153,78 @@ object containing session specifications.
 
 + Parameters
     + session_id (GUID) - ID of the Session in the form of an GUID
+
++ Attributes
+    + id: (string)          - The GUID of the session
+    + created_at: (string)  - Created date-time of the session
+    + started_at: (string)  - Start date-time of the session
+    + stopped_at: (string)  - Stop date-time of the session
+    + state: (string)       - State of the session ["not started", "started", "stopped"]
+    + instructions: (string)- Instructions for the VoiceReach call navigators
+    + access_code: (string) - Access code to login to session via VoiceReach conference bridge
+    + recording: (string)   - Recording flag ["true", "false"]
+    + call_back_url: (string)               - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
+    + call_back_events: (array[string])     - The call progress events that VoiceReach will send webhooks on. Available values are "queued", "connecting", "ringing", "answered", "transferred" and "completed"
+    + caller_id_type: (string)      - Method used by VoiceReach to set caller ID ["none", "fixed", "random-select", "prospect-location"]
+    + caller_id: (array[string])    - Caller IDs to be used as per caller_id_type
     
 ### Get Session Details [GET]
 
 + Response 200 (application/json)
 
-        [
+        {
+            "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
+            "created_at": "2016-10-17T08:40:51.620Z",
+            "started_at": "",
+            "stopped_at": "",
+            "state": "not started",
+            "instructions": "Use this script",
+            "access_code": "123-456-789",
+            "recording": "true",
+            "call_back_url": "https://my.webapp.com",
+            "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
+            "auto_repeat": "true",
+            "caller_id_type": "random-select",
+            "caller_id":["+14087555678", "+12087555678"],
+            "stats": {
+                "dial_attempts": 0,
+                "live_connects": 0,
+                "actual_usage_time": 0,
+                "average_talk_time": 0,
+                "average_wait_time": 0
+            }
+        }
+
+###  Session Control - Start/Stop [PUT]
++ Attributes
+    + id: (string)- GUID of session
+    + state: (string) - Control of session ["start", "stop"]
+
++ Request (application/json)
+
+        {
+            "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
+            "state": "start",
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /sessions/0f48b8ea-0253-4f1f-be5d-5787e32b34f9
+
+    + Body
+
             {
                 "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
                 "created_at": "2016-10-17T08:40:51.620Z",
-                "started_at": "",
-                "ended_at": "",
-                "state": "not started",
+                "started_at": "2016-10-17T09:30:00.000Z",
+                "stopped_at": "",
+                "state": "started",
                 "instructions": "Use this script",
                 "access_code": "123-456-789",
                 "recording": "true",
-                "call_back": "https://my.webapp.com",
+                "call_back_url": "https://my.webapp.com",
                 "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
                 "auto_repeat": "true",
                 "caller_id_type": "random-select",
@@ -160,59 +237,132 @@ object containing session specifications.
                     "average_wait_time": 0
                 }
             }
-        ]
+
++ Request (application/json)
+
+        {
+            "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
+            "state": "stop",
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /sessions/0f48b8ea-0253-4f1f-be5d-5787e32b34f9
+
+    + Body
+
+            {
+                "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
+                "created_at": "2016-10-17T08:40:51.620Z",
+                "started_at": "2016-10-17T09:30:00.000Z",
+                "stopped_at": "2016-10-17T10:30:00.000Z",
+                "state": "stopped",
+                "instructions": "Use this script",
+                "access_code": "123-456-789",
+                "recording": "true",
+                "call_back_url": "https://my.webapp.com",
+                "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
+                "auto_repeat": "true",
+                "caller_id_type": "random-select",
+                "caller_id":["+14087555678", "+12087555678"],
+                "stats": {
+                    "dial_attempts": 100,
+                    "live_connects": 4,
+                    "actual_usage_time": 59.95,
+                    "average_talk_time": 7.86,
+                    "average_wait_time": 3.14
+                }
+            }
+
 
 ## Session Prospects Collection [/sessions/{session_id}/prospects]
 
 + Parameters
     + session_id (GUID) - ID of the Session in the form of an GUID
 
++ Attributes
+    + id: (string)      - External Unique ID of prospect
+    + name: (string)    - Full name of prospect
+    + title: (string)   - Job title of prospect
+    + phone: (array)    - Array of phone numbers {"numbers": "+11234567890", "extension": "x1234"}; Order of phone numbers provided will be used by VoiceReach call navigators to prioritize which phone number to dial first
+    + company: (string) - Name of company
+    + location: (string)- Location of prospect
+
+
+### List All Prospect from a Session [GET]
+
++ Response 200 (application/json)
+        [
+            {
+                "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
+                "name": "Barbara Thomas",
+                "title": "CEO",
+                "phone": [
+                            {"number": "+14086795546"},
+                            {
+                                "number": "+14086795500",
+                                "extension": "1234"
+                            }
+                        ],
+                "company": "ProviderTrust",
+                "location": "Cupertino, CA"
+            }, {
+                "id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
+                "name": "John Baker",
+                "title": "Vice President",
+                "phone": [
+                    {"number": "+12097895546"},
+                    {"number": "+12097895547"},
+                    {"number": "+12097895548"}
+                ],
+                "company": "Potomac River Holdings",
+                "location": "Richmond, Virgina"
+            }
+        ]
+
 ### Add Prospects to a Session [POST]
 
 + Request (application/json)
 
-    [
-        {
-            "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
-            "name": "Taylor Swift",
-            "title": "CEO",
-            "phone": [
-                        {"number": "+14086795546"},
-                        {
-                            "number": "+14086795500",
-                            "extension": "1234"
-                        }
+        [
+            {
+                "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
+                "name": "Barbara Thomas",
+                "title": "CEO",
+                "phone": [
+                            {"number": "+14086795546"},
+                            {
+                                "number": "+14086795500",
+                                "extension": "1234"
+                            }
+                        ],
+                "company": "ProviderTrust",
+                "location": "Cupertino, CA"
+            }, {
+                "id": "12280339-9974-423b-98a3-684e80c25097",
+                "name": "Ricardo Lopez",
+                "title": "CFO",
+                "phone": [
+                    {"number": "+12126795546"},
+                    {"xyz": "+12126795500"}
                     ],
-            "company": "Spotify",
-            "location": "Cupertino, CA"
-        }, 
-        {
-            "id": "12280339-9974-423b-98a3-684e80c25097",
-            "name": "Ozzy Olsbourne",
-            "title": "CFO",
-            "subject": "Call back with info",
-            "description": "Lorem ipsum ..."
-            "duedate": "2015-08-05T10:00:00.000Z",
-            "phone": [
-                {"number": "+12126795546"},
-                {"xyz": "+12126795500"}
+                "company": "Home Run Media",
+                "location": "Malibu, CA"
+            }, {
+                "id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
+                "name": "John Baker",
+                "title": "Vice President",
+                "phone": [
+                    {"number": "+12097895546"},
+                    {"number": "+12097895547"},
+                    {"number": "+12097895548"}
                 ],
-            "company": "Garage Band",
-            "location": "Malibu, CA"
-        }, 
-        {
-            "id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
-            "name": "John Grisham",
-            "title": "Vice President",
-            "phone": [
-                {"number": "+12097895546"},
-                {"number": "+12097895547"},
-                {"number": "+12097895548"}
-            ],
-            "company": "NSA",
-            "location": "Pentagon, Virgina"
-        }
-    ]
+                "company": "Potomac River Holdings",
+                "location": "Richmond, Virgina"
+            }
+        ]
 
 + Response 201 (application/json)
 
@@ -223,190 +373,31 @@ object containing session specifications.
     + Body
 
         [
-                {
-                    "id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
-                    "result": "OK",
-                    "remark": ""
-                }, {
-                    "id": "12280339-9974-423b-98a3-684e80c25097",
-                    "result": "Error",
-                    "remark": "Phone number incorrect"
-                }, {
-                    "id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
-                    "result": "Duplicate",
-                    "remark": "Record already exists in the system"
-                }
+            {
+                "id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
+                "result": "OK",
+                "remark": ""
+            }, {
+                "id": "12280339-9974-423b-98a3-684e80c25097",
+                "result": "Error",
+                "remark": "Phone number incorrect"
+            }, {
+                "id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
+                "result": "Duplicate",
+                "remark": "Record already exists in the system"
+            }
         ]
             
-### List All Prospect from a Session [GET]
-
-+ Response 200 (application/json)
 
 ### Delete Prospects from a Session [DELETE]
 
 + Request (application/json)
 
-        {
-            "prospects": [
-                    {
-                        "id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
-                        "name": "Taylor Swift",
-                        "title": "CEO",
-                        "phone": [
-                            {"number": "+14086795546"},
-                            {
-                                "number": "+14086795500",
-                                "extension": "1234"
-                            }
-                        ],
-                        "company": "Spotify",
-                        "location": "Cupertino, CA"
-                    }
-                ]
-        }
+        [
+            {"id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89"}
+        ]
 
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /sessions/15f1d496-02ed-47b4-88a7-ec56dc889571
-
-    + Body
-
-            {
-                "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
-                "created_at": "2016-10-17T08:40:51.620Z",
-                "started_at": "",
-                "ended_at": "",
-                "state": "not started",
-                "instructions": "Use this script",
-                "access_code": "123-456-789",
-                "recording": "true",
-                "call_back": "https://my.webapp.com",
-                "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
-                "auto_repeat": "true",
-                "stats": {
-                    "dial_attempts": 0,
-                    "live_connects": 0,
-                    "actual_usage_time": 0,
-                    "average_talk_time": 0,
-                    "average_wait_time": 0
-                },
-                "prospects": [
-                    {
-                        "id": "12280339-9974-423b-98a3-684e80c25097",
-                        "name": "Ozzy Olsbourne",
-                        "title": "CFO",
-                        "subject": "Call back with info",
-                        "description": "Lorem ipsum ..."
-                        "duedate": "2015-08-05T10:00:00.000Z",
-                        "phone": [
-                            {"number": "+12126795546"},
-                            {
-                                "number": "+12126795500"
-                            }
-                        ],
-                        "company": "Garage Band",
-                        "location": "Malibu, CA"
-                    }, {
-                        "id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
-                        "name": "John Grisham",
-                        "title": "Vice President",
-                        "phone": [
-                            {"number": "+12097895546"},
-                            {"number": "+12097895547"},
-                            {"number": "+12097895548"},
-                        ],
-                        "company": "NSA",
-                        "location": "Pentagon, Virgina"
-                    }
-                ]
-            }
-
-## Session Controls Collection [/sessions/{session_id}/controls]
-
-+ Parameters
-    + session_id (GUID) - ID of the Session in the form of an GUID
-
-### Create Session Control and Start [POST]
-+ Request (application/json)
-
-        {
-            "action": "start"
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /sessions/0f48b8ea-0253-4f1f-be5d-5787e32b34f9/control/1
-
-    + Body
-
-            {
-                "id": 1,
-                "started_at": "2016-10-17T09:30:00.000Z",
-                "restarted_at": [""],
-                "ended_at": "",
-                "state": "started"
-            }
-
-+ Response 409 (text/plain)
-
-        This session control has already been started
-
-
-## Session Controls - Stop/Restart [/sessions/{session_id}/controls/{control_id}]
-
-+ Parameters
-    + session_id (GUID) - ID of the Session in the form of an GUID
-    + control_id (ID) - ID of the Session in the form of an integer
-
-### Session Stop/Restart [PUT]
-
-+ Request (application/json)
-
-        {
-            "action": "stop"
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /sessions/0f48b8ea-0253-4f1f-be5d-5787e32b34f9/control/1
-
-    + Body
-
-            {
-                "id": 1,
-                "started_at": "2016-10-17T09:30:00.000Z",
-                "restarted_at": [""],
-                "ended_at": "2016-10-17T09:45:00.000Z",
-                "state": "stopped"
-            }
-
-+ Request (application/json)
-
-        {
-            "action": "restart"
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /sessions/0f48b8ea-0253-4f1f-be5d-5787e32b34f9/control/1
-
-    + Body
-
-            {
-                "id": 1,
-                "started_at": "2016-10-17T09:30:00.000Z",
-                "restarted_at": ["2016-10-17T09:45:00.000Z"],
-                "ended_at": "", 
-                "state": "started"
-            }
++ Response 204
 
 
 ## Session Interactions Collection [/sessions/{session_id}/interactions]
@@ -417,99 +408,93 @@ object containing session specifications.
 ### Get Interactions in a Session [GET]
 + Response 200 (application/json)
 
-            [
-                    {
-                        "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
-                        "type": "live call navigator attempt",
-                        "status": "completed",
-                        "outcome": "no rpc",
-                        "started_at": "2015-08-05T09:31:08.030Z",
-                        "ended_at": "",
-                        "prospect_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
-                        "name": "Taylor Swift",
-                        "title": "CEO",
-                        "phone": "+14086795546",
-                        "company": "Spotify",
-                        "location": "Cupertino, CA",
-                    }, {
-                        "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
-                        "type": "live call navigator attempt",
-                        "status": "connecting",
-                        "outcome": "",
-                        "started_at": "2015-08-05T09:31:08.030Z",
-                        "ended_at": "",
-                        "prospect_id": "12280339-9974-423b-98a3-684e80c25097",
-                        "name": "Ozzy Olsbourne",
-                        "title": "CFO",
-                        "subject": "Call back with info",
-                        "description": "Lorem ipsum ..."
-                        "duedate": "2015-08-05T10:00:00.000Z",
-                        "phone": "+12126795546",
-                        "company": "Garage Band",
-                        "location": "Malibu, CA"
-                    }, {
-                        "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
-                        "type": "live call navigator attempt",
-                        "status": "answered",
-                        "outcome": "",
-                        "started_at": "2015-08-05T09:31:08.030Z",
-                        "ended_at": "",
-                        "prospect_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
-                        "name": "John Grisham",
-                        "title": "Vice President",
-                        "phone": "+12097895548",
-                        "company": "NSA",
-                        "location": "Pentagon, Virgina"
-                    }
-            ]
+        [
+            {
+                "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
+                "type": "live call navigator attempt",
+                "status": "completed",
+                "outcome": "no rpc",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "prospect_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
+                "name": "Barbara Thomas",
+                "title": "CEO",
+                "phone": "+14086795546",
+                "company": "ProviderTrust",
+                "location": "Cupertino, CA",
+            }, {
+                "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
+                "type": "live call navigator attempt",
+                "status": "connecting",
+                "outcome": "",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "prospect_id": "12280339-9974-423b-98a3-684e80c25097",
+                "name": "John Clayton",
+                "title": "CFO",
+                "phone": "+12126795546",
+                "company": "Home Run Media",
+                "location": "Malibu, CA"
+            }, {
+                "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
+                "type": "live call navigator attempt",
+                "status": "answered",
+                "outcome": "",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "prospect_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
+                "name": "John Baker",
+                "title": "Vice President",
+                "phone": "+12097895548",
+                "company": "Potomac River Holdings",
+                "location": "Richmond, Virgina"
+            }
+        ]
 
 ## Interactions [/interactions]
 
 ### Get Interactions [GET]
 + Response 200 (application/json)
 
-            [
-                    {
-                        "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
-                        "type": "live call navigator attempt",
-                        "status": "completed",
-                        "outcome": "no rpc",
-                        "started_at": "2015-08-05T09:31:08.030Z",
-                        "ended_at": "",
-                        "prospect_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
-                        "name": "Taylor Swift",
-                        "title": "CEO",
-                        "phone": "+14086795546",
-                        "company": "Spotify",
-                        "location": "Cupertino, CA",
-                    }, {
-                        "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
-                        "type": "live call navigator attempt",
-                        "status": "connecting",
-                        "outcome": "",
-                        "started_at": "2015-08-05T09:31:08.030Z",
-                        "ended_at": "",
-                        "prospect_id": "12280339-9974-423b-98a3-684e80c25097",
-                        "name": "Ozzy Olsbourne",
-                        "title": "CFO",
-                        "subject": "Call back with info",
-                        "description": "Lorem ipsum ..."
-                        "duedate": "2015-08-05T10:00:00.000Z",
-                        "phone": "+12126795546",
-                        "company": "Garage Band",
-                        "location": "Malibu, CA"
-                    }, {
-                        "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
-                        "type": "live call navigator attempt",
-                        "status": "answered",
-                        "outcome": "",
-                        "started_at": "2015-08-05T09:31:08.030Z",
-                        "ended_at": "",
-                        "prospect_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
-                        "name": "John Grisham",
-                        "title": "Vice President",
-                        "phone": "+12097895548",
-                        "company": "NSA",
-                        "location": "Pentagon, Virgina"
-                    }
-            ]
+        [
+            {
+                "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
+                "type": "live call navigator attempt",
+                "status": "completed",
+                "outcome": "no rpc",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "prospect_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
+                "name": "Barbara Thomas",
+                "title": "CEO",
+                "phone": "+14086795546",
+                "company": "ProviderTrust",
+                "location": "Cupertino, CA",
+            }, {
+                "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
+                "type": "live call navigator attempt",
+                "status": "connecting",
+                "outcome": "",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "prospect_id": "12280339-9974-423b-98a3-684e80c25097",
+                "name": "Ricardo Lopez",
+                "title": "CFO",
+                "phone": "+12126795546",
+                "company": "Home Run Media",
+                "location": "Malibu, CA"
+            }, {
+                "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
+                "type": "live call navigator attempt",
+                "status": "answered",
+                "outcome": "",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "prospect_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
+                "name": "John Baker",
+                "title": "Vice President",
+                "phone": "+12097895548",
+                "company": "Potomac River Holdings",
+                "location": "Richmond, Virgina"
+            }
+        ]

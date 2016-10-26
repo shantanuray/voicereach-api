@@ -94,6 +94,8 @@ You may check status of a conference room using this action. Every time a user h
             }
 
 ###  Conference Room Release [PUT]
+You may release a conference room using this action. Once released, a conference room cannot be used to login again. A new conference room will have to be requested.
+
 + Attributes
     + id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - ID of the Conference Room in the form of an GUID
     + state: start (string) - Control of session (start, stop)
@@ -273,7 +275,7 @@ You may create your own session using this action. It takes a JSON object contai
             }
 
 ## Session Details [/accounts/{account_id}/sessions/{session_id}]
-Get individual session details
+The actions on individual sessions are listed here such as getting specific session details and starting/ stopping a session
 
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
@@ -422,6 +424,7 @@ Manage prospects allocated to sessions using these API
 
 
 ### List All Prospect from a Session [GET]
+List all prospects allocated to a session. You may use fields to narrow the search
 
 + Response 200 (application/json)
             [
@@ -453,6 +456,7 @@ Manage prospects allocated to sessions using these API
             ]
 
 ### Add Prospects to a Session [POST]
+You may this action to add one or more prospects to a session. Please note that response will always be 201 for a correctly formatted request. Kindly parse through response for individual prospects to verify if prospect was added to session or not. The prospect ID will be used as the unique identifier.
 
 + Request (application/json)
 
@@ -520,12 +524,12 @@ Manage prospects allocated to sessions using these API
             
 
 ### Delete Prospects from a Session [DELETE]
+Use this action to delete prospect from session. Currently only one prospect can be deleted at a time.
 
 + Request (application/json)
 
-        [
-            {"id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89"}
-        ]
+        {"id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89"}
+
 
 + Response 204
 
@@ -551,6 +555,8 @@ Retrieve interactions for the given session
     + location: `Cupertino, CA` (string) - Location of prospect
 
 ### Get Interactions in a Session [GET]
+Retrieve interactions for a given session
+
 + Response 200 (application/json)
 
         [

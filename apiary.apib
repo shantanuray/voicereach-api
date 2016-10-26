@@ -7,18 +7,18 @@ VoiceReach API will allow third party systems to run a VoiceReach dialer session
 
 ## Sessions Collection [/sessions]    
 + Attributes
-    + id: (string)          - The GUID of the session
-    + created_at: (string)  - Created date-time of the session
-    + started_at: (string)  - Start date-time of the session
-    + stopped_at: (string)  - Stop date-time of the session
-    + state: (string)       - State of the session ["not started", "started", "stopped"]
-    + instructions: (string)- Instructions for the VoiceReach call navigators
-    + access_code: (string) - Access code to login to session via VoiceReach conference bridge
-    + recording: (string)   - Recording flag ["true", "false"]
-    + call_back_url: (string)               - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
-    + call_back_events: (array[string])     - The call progress events that VoiceReach will send webhooks on. Available values are "queued", "connecting", "ringing", "answered", "transferred" and "completed"
-    + caller_id_type: (string)      - Method used by VoiceReach to set caller ID ["none", "fixed", "random-select", "prospect-location"]
-    + caller_id: (array[string])    - Caller IDs to be used as per caller_id_type
+    + id: "0f48b8ea-0253-4f1f-be5d-5787e32b34f9" (string)  - The GUID of the session
+    + created_at: "2016-10-17T08:40:51.620Z" (string)  - Created date-time of the session
+    + started_at: "2016-10-17T09:30:00.000Z" (string)  - Start date-time of the session
+    + stopped_at: "2016-10-17T10:30:00.000Z" (string)  - Stop date-time of the session
+    + state: "not started" (string)  - State of the session ["not started", "started", "stopped"]
+    + instructions: "Use this script" (string) - Instructions for the VoiceReach call navigators
+    + access_code: "123-456-789" (string) - Access code to login to session via VoiceReach conference bridge
+    + recording: "true" (string) - Recording flag ["true", "false"]
+    + call_back_url: "https://my.webapp.com" (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
+    + call_back_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are "queued", "connecting", "ringing", "answered", "transferred" and "completed"
+    + caller_id_type: "fixed" (string) - Method used by VoiceReach to set caller ID ["none", "fixed", "random-select", "prospect-location"]
+    + caller_id: ["+14087555678"] (array[string]) - Caller IDs to be used as per caller_id_type
 
 ### List All Sessions [GET]
 
@@ -99,13 +99,14 @@ object containing session specifications.
 
 + Request (application/json)
     + Attributes
-        + instructions: (string)- Instructions for the VoiceReach call navigators
-        + access_code: (string) - Access code to login to session via VoiceReach conference bridge
-        + recording: (string)   - Recording flag ["true", "false"]
-        + call_back_url: (string)               - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
-        + call_back_events: (array[string])     - The call progress events that VoiceReach will send webhooks on. Available values are "queued", "connecting", "ringing", "answered", "transferred" and "completed"
-        + caller_id_type: (string)      - Method used by VoiceReach to set caller ID ["none", "fixed", "random-select", "prospect-location"]
-        + caller_id: (array[string])    - Caller IDs to be used as per caller_id_type
+        + instructions: "Use this script" (string) - Instructions for the VoiceReach call navigators
+        + access_code: "123-456-789" (string) - Access code to login to session via VoiceReach conference bridge
+        + recording: "true" (string) - Recording flag ["true", "false"]
+        + call_back_url: "https://my.webapp.com" (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
+        + call_back_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are "queued", "connecting", "ringing", "answered", "transferred" and "completed"
+        + caller_id_type: "fixed" (string) - Method used by VoiceReach to set caller ID ["none", "fixed", "random-select", "prospect-location"]
+        + caller_id: ["+14087555678"] (array[string]) - Caller IDs to be used as per caller_id_type
+
     + Body
 
         {
@@ -155,18 +156,18 @@ object containing session specifications.
     + session_id (GUID) - ID of the Session in the form of an GUID
 
 + Attributes
-    + id: (string)          - The GUID of the session
-    + created_at: (string)  - Created date-time of the session
-    + started_at: (string)  - Start date-time of the session
-    + stopped_at: (string)  - Stop date-time of the session
-    + state: (string)       - State of the session ["not started", "started", "stopped"]
-    + instructions: (string)- Instructions for the VoiceReach call navigators
-    + access_code: (string) - Access code to login to session via VoiceReach conference bridge
-    + recording: (string)   - Recording flag ["true", "false"]
-    + call_back_url: (string)               - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
-    + call_back_events: (array[string])     - The call progress events that VoiceReach will send webhooks on. Available values are "queued", "connecting", "ringing", "answered", "transferred" and "completed"
-    + caller_id_type: (string)      - Method used by VoiceReach to set caller ID ["none", "fixed", "random-select", "prospect-location"]
-    + caller_id: (array[string])    - Caller IDs to be used as per caller_id_type
+    + id: "0f48b8ea-0253-4f1f-be5d-5787e32b34f9" (string)  - The GUID of the session
+    + created_at: "2016-10-17T08:40:51.620Z" (string)  - Created date-time of the session
+    + started_at: "2016-10-17T09:30:00.000Z" (string)  - Start date-time of the session
+    + stopped_at: "2016-10-17T10:30:00.000Z" (string)  - Stop date-time of the session
+    + state: "not started" (string)  - State of the session ["not started", "started", "stopped"]
+    + instructions: "Use this script" (string) - Instructions for the VoiceReach call navigators
+    + access_code: "123-456-789" (string) - Access code to login to session via VoiceReach conference bridge
+    + recording: "true" (string) - Recording flag ["true", "false"]
+    + call_back_url: "https://my.webapp.com" (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
+    + call_back_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are "queued", "connecting", "ringing", "answered", "transferred" and "completed"
+    + caller_id_type: "fixed" (string) - Method used by VoiceReach to set caller ID ["none", "fixed", "random-select", "prospect-location"]
+    + caller_id: ["+14087555678"] (array[string]) - Caller IDs to be used as per caller_id_type
     
 ### Get Session Details [GET]
 
@@ -197,8 +198,8 @@ object containing session specifications.
 
 ###  Session Control - Start/Stop [PUT]
 + Attributes
-    + id: (string)- GUID of session
-    + state: (string) - Control of session ["start", "stop"]
+    + id: "0f48b8ea-0253-4f1f-be5d-5787e32b34f9" (string)- GUID of session
+    + state: "start" (string) - Control of session ["start", "stop"]
 
 + Request (application/json)
 
@@ -283,12 +284,12 @@ object containing session specifications.
     + session_id (GUID) - ID of the Session in the form of an GUID
 
 + Attributes
-    + id: (string)      - External Unique ID of prospect
-    + name: (string)    - Full name of prospect
-    + title: (string)   - Job title of prospect
-    + phone: (array)    - Array of phone numbers {"numbers": "+11234567890", "extension": "x1234"}; Order of phone numbers provided will be used by VoiceReach call navigators to prioritize which phone number to dial first
-    + company: (string) - Name of company
-    + location: (string)- Location of prospect
+    + id: 0f48b8ea-0253-4f1f-be5d-5787e32b34f9 (string)      - External Unique ID of prospect
+    + name: Barbara Thomas (string)    - Full name of prospect
+    + title: CEO (string)   - Job title of prospect
+    + phone: [{"number": "+14086795546"}] (array)    - Array of phone numbers {"numbers": "+11234567890", "extension": "x1234"}; Order of phone numbers provided will be used by VoiceReach call navigators to prioritize which phone number to dial first
+    + company: ProviderTrust (string) - Name of company
+    + location: Cupertino, CA (string)- Location of prospect
 
 
 ### List All Prospect from a Session [GET]

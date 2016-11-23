@@ -300,28 +300,28 @@ The actions on individual sessions are listed here such as getting specific sess
 
 + Response 200 (application/json)
 
-        {
-            "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
-            "created_at": "2016-10-17T08:40:51.620Z",
-            "started_at": "",
-            "stopped_at": "",
-            "state": "not_started",
-            "instructions": "Use this script",
-            "access_code": "123-456-789",
-            "recording": "true",
-            "call_back_url": "https://my.webapp.com",
-            "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
-            "auto_repeat": "true",
-            "caller_id_type": "random-select",
-            "caller_id":["+14087555678", "+12087555678"],
-            "stats": {
-                "dial_attempts": 0,
-                "live_connects": 0,
-                "actual_usage_time": 0,
-                "average_talk_time": 0,
-                "average_wait_time": 0
+            {
+                "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
+                "created_at": "2016-10-17T08:40:51.620Z",
+                "started_at": "",
+                "stopped_at": "",
+                "state": "not_started",
+                "instructions": "Use this script",
+                "access_code": "123-456-789",
+                "recording": "true",
+                "call_back_url": "https://my.webapp.com",
+                "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
+                "auto_repeat": "true",
+                "caller_id_type": "random-select",
+                "caller_id":["+14087555678", "+12087555678"],
+                "stats": {
+                    "dial_attempts": 0,
+                    "live_connects": 0,
+                    "actual_usage_time": 0,
+                    "average_talk_time": 0,
+                    "average_wait_time": 0
+                }
             }
-        }
 
 ###  Session Control - Start/Stop [PUT]
 Control a session by starting and stopping dialing to the given session by using this.
@@ -559,48 +559,48 @@ Retrieve interactions for a given session
 
 + Response 200 (application/json)
 
-        [
-            {
-                "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
-                "type": "live call navigator attempt",
-                "status": "completed",
-                "outcome": "no rpc",
-                "started_at": "2015-08-05T09:31:08.030Z",
-                "stopped_at": "",
-                "prospect_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
-                "name": "Barbara Thomas",
-                "title": "CEO",
-                "phone": "+14086795546",
-                "company": "ProviderTrust",
-                "location": "Cupertino, CA",
-            }, {
-                "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
-                "type": "live call navigator attempt",
-                "status": "connecting",
-                "outcome": "",
-                "started_at": "2015-08-05T09:31:08.030Z",
-                "stopped_at": "",
-                "prospect_id": "12280339-9974-423b-98a3-684e80c25097",
-                "name": "John Clayton",
-                "title": "CFO",
-                "phone": "+12126795546",
-                "company": "Home Run Media",
-                "location": "Malibu, CA"
-            }, {
-                "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
-                "type": "live call navigator attempt",
-                "status": "answered",
-                "outcome": "",
-                "started_at": "2015-08-05T09:31:08.030Z",
-                "stopped_at": "",
-                "prospect_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
-                "name": "John Baker",
-                "title": "Vice President",
-                "phone": "+12097895548",
-                "company": "Potomac River Holdings",
-                "location": "Richmond, Virgina"
-            }
-        ]
+            [
+                {
+                    "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
+                    "type": "live call navigator attempt",
+                    "status": "completed",
+                    "outcome": "no rpc",
+                    "started_at": "2015-08-05T09:31:08.030Z",
+                    "stopped_at": "",
+                    "prospect_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
+                    "name": "Barbara Thomas",
+                    "title": "CEO",
+                    "phone": "+14086795546",
+                    "company": "ProviderTrust",
+                    "location": "Cupertino, CA",
+                }, {
+                    "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
+                    "type": "live call navigator attempt",
+                    "status": "connecting",
+                    "outcome": "",
+                    "started_at": "2015-08-05T09:31:08.030Z",
+                    "stopped_at": "",
+                    "prospect_id": "12280339-9974-423b-98a3-684e80c25097",
+                    "name": "John Clayton",
+                    "title": "CFO",
+                    "phone": "+12126795546",
+                    "company": "Home Run Media",
+                    "location": "Malibu, CA"
+                }, {
+                    "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
+                    "type": "live call navigator attempt",
+                    "status": "answered",
+                    "outcome": "",
+                    "started_at": "2015-08-05T09:31:08.030Z",
+                    "stopped_at": "",
+                    "prospect_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
+                    "name": "John Baker",
+                    "title": "Vice President",
+                    "phone": "+12097895548",
+                    "company": "Potomac River Holdings",
+                    "location": "Richmond, Virgina"
+                }
+            ]
 
 ## Interactions [/accounts/{account_id}/interactions]
 Retrieve all interactions. Use fields to narrow search
@@ -624,45 +624,45 @@ Retrieve all interactions. Use fields to narrow search
 ### Get Interactions [GET]
 + Response 200 (application/json)
 
-        [
-            {
-                "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
-                "type": "live call navigator attempt",
-                "status": "completed",
-                "outcome": "no rpc",
-                "started_at": "2015-08-05T09:31:08.030Z",
-                "stopped_at": "",
-                "prospect_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
-                "name": "Barbara Thomas",
-                "title": "CEO",
-                "phone": "+14086795546",
-                "company": "ProviderTrust",
-                "location": "Cupertino, CA",
-            }, {
-                "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
-                "type": "live call navigator attempt",
-                "status": "connecting",
-                "outcome": "",
-                "started_at": "2015-08-05T09:31:08.030Z",
-                "stopped_at": "",
-                "prospect_id": "12280339-9974-423b-98a3-684e80c25097",
-                "name": "Ricardo Lopez",
-                "title": "CFO",
-                "phone": "+12126795546",
-                "company": "Home Run Media",
-                "location": "Malibu, CA"
-            }, {
-                "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
-                "type": "live call navigator attempt",
-                "status": "answered",
-                "outcome": "",
-                "started_at": "2015-08-05T09:31:08.030Z",
-                "stopped_at": "",
-                "prospect_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
-                "name": "John Baker",
-                "title": "Vice President",
-                "phone": "+12097895548",
-                "company": "Potomac River Holdings",
-                "location": "Richmond, Virgina"
-            }
-        ]
+            [
+                {
+                    "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
+                    "type": "live call navigator attempt",
+                    "status": "completed",
+                    "outcome": "no rpc",
+                    "started_at": "2015-08-05T09:31:08.030Z",
+                    "stopped_at": "",
+                    "prospect_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
+                    "name": "Barbara Thomas",
+                    "title": "CEO",
+                    "phone": "+14086795546",
+                    "company": "ProviderTrust",
+                    "location": "Cupertino, CA",
+                }, {
+                    "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
+                    "type": "live call navigator attempt",
+                    "status": "connecting",
+                    "outcome": "",
+                    "started_at": "2015-08-05T09:31:08.030Z",
+                    "stopped_at": "",
+                    "prospect_id": "12280339-9974-423b-98a3-684e80c25097",
+                    "name": "Ricardo Lopez",
+                    "title": "CFO",
+                    "phone": "+12126795546",
+                    "company": "Home Run Media",
+                    "location": "Malibu, CA"
+                }, {
+                    "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
+                    "type": "live call navigator attempt",
+                    "status": "answered",
+                    "outcome": "",
+                    "started_at": "2015-08-05T09:31:08.030Z",
+                    "stopped_at": "",
+                    "prospect_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
+                    "name": "John Baker",
+                    "title": "Vice President",
+                    "phone": "+12097895548",
+                    "company": "Potomac River Holdings",
+                    "location": "Richmond, Virgina"
+                }
+            ]

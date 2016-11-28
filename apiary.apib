@@ -17,8 +17,8 @@ The key goals of this API are:
 *   Each Conference Bridge is identified by a unique access code per user -  Bridge Access Code
 *   A Conference Bridge is a long-lived resource that will typically be allocated to an end-user for as long as the end-user has access to the VoiceReach system
 *   Information belonging to the Conference Bridge includes such things as: 
--   Telephone number
--   Bridge Access Code
+**   Telephone number
+**   Bridge Access Code
 
 
 + Parameters
@@ -146,10 +146,11 @@ You may release a conference bridge using this action. Once released, a conferen
 *   A user who has dialed into a conference bridge can log into a session by a unique Session Access Code
 *   A session can be started and stopped at specific times or started and stopped on demand
 *   In addition to session information, a session also consists of:
--   Target list of contacts
--   Text instructions to the dialing agents
--   Snapshot of current real-time status
--   Historical record of dialing interactions
+**   Target list of contacts
+**   Text instructions to the dialing agents
+**   Snapshot of current real-time status
+**   Historical record of dialing interactions
+
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
 
@@ -242,7 +243,6 @@ List all VoiceReach sessions. Use fields to narrow search
         ]
 
 ### Create a New Session [POST]
-
 You may create your own session using this action. It takes a JSON object containing session specifications.
 
 + Request (application/json)
@@ -436,11 +436,10 @@ Manage contacts allocated to sessions using these API. A contact is:
 *    A person that the dialing agents are attempting to make and that the end-user desires to speak to
 *   Is identified by a unique Contact ID
 *   Contains a variety of information needed by the dialing agents to conduct their introduction conversation. This includes things such as 
--   Name
--   Title
--   Telephone number
--   Company name
-
+**   Name
+**   Title
+**   Telephone number
+**   Company name
 
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key

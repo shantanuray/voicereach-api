@@ -19,8 +19,6 @@ The key goals of this API are:
 -   Telephone number
 -   Bridge Access Code
 
-### List All Conference Bridges [GET]
-You may list all conference bridges that you have access to using this action
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
 
@@ -31,6 +29,9 @@ You may list all conference bridges that you have access to using this action
     + bridge_access_code: 123456789 (number) - The dial-in access code of conference bridge
     + status_callback_url: `https://mywebapp.com/conference` (string) - The URL that VoiceReach will asynchronous webhook requests to on every call event specified in the status_callback_events parameter. URLs must contain a valid hostname (underscores are not permitted)
     + status_callback_events: ["in use","released"] (array[string]) - List of conference events (not in use, in use, released) to use for call backs. If no event is present, VoiceReach will send "in use" by default
+
+### List All Conference Bridges [GET]
+You may list all conference bridges that you have access to using this action
 
 + Response 200 (application/json)
 
@@ -148,8 +149,6 @@ You may release a conference bridge using this action. Once released, a conferen
 -   Snapshot of current real-time status
 -   Historical record of dialing interactions
 
-### List All Sessions [GET]
-List all VoiceReach sessions. Use fields to narrow search
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
 
@@ -166,6 +165,9 @@ List all VoiceReach sessions. Use fields to narrow search
     + status_callback_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are queued, connecting, ringing, answered, transferred and completed
     + caller_id_type: fixed (string) - Method used by VoiceReach to set caller ID (none, fixed, random-select)
     + caller_id: +14087555678 (array[string]) - Caller IDs to be used as per caller_id_type
+
+### List All Sessions [GET]
+List all VoiceReach sessions. Use fields to narrow search
     
 + Response 200 (application/json)
 
@@ -296,7 +298,8 @@ You may create your own session using this action. It takes a JSON object contai
 
 ## Session Details [/accounts/{account_id}/sessions/{session_id}]
 The actions on individual sessions are listed here such as getting specific session details and starting/ stopping a session
-
+    
+### Get Session Details [GET]
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
     + session_id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - ID of the Session in the form of an GUID
@@ -314,8 +317,6 @@ The actions on individual sessions are listed here such as getting specific sess
     + status_callback_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are queued, connecting, ringing, answered, transferred and completed
     + caller_id_type: fixed (string) - Method used by VoiceReach to set caller ID (none, fixed, random-select)
     + caller_id: +14087555678 (array[string]) - Caller IDs to be used as per caller_id_type
-    
-### Get Session Details [GET]
 
 + Response 200 (application/json)
 
@@ -436,8 +437,6 @@ Manage contacts allocated to sessions using these API. A contact is:
 -   Telephone number
 -   Company name
 
-### List All Contact from a Session [GET]
-List all contacts allocated to a session. You may use fields to narrow the search
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
     + session_id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - ID of the Session in the form of an GUID
@@ -449,6 +448,9 @@ List all contacts allocated to a session. You may use fields to narrow the searc
     + phone: [{"number": "+14086795546"}, {"number": "+14086795000", "extension": "x1234"}] (array) - Array of phone numbers; Order of phone numbers provided will be used by VoiceReach call navigators to prioritize which phone number to dial first
     + company: ProviderTrust (string) - Name of company
     + location: `Cupertino, CA` (string) - Location of contact
+
+### List All Contact from a Session [GET]
+List all contacts allocated to a session. You may use fields to narrow the search
     
 + Response 200 (application/json)
 
@@ -629,6 +631,7 @@ Retrieve interactions for a given session
 ## Interactions [/accounts/{account_id}/interactions]
 Retrieve all interactions. Use fields to narrow search
 
+### Get Interactions [GET]
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
 
@@ -644,8 +647,7 @@ Retrieve all interactions. Use fields to narrow search
     + phone: +14087555678 (string) - Phone number dialed to connect with contact
     + company: ProviderTrust (string) - Name of company
     + location: `Cupertino, CA` (string) - Location of contact
-
-### Get Interactions [GET]
+    
 + Response 200 (application/json)
 
         [

@@ -3,10 +3,24 @@ HOST: http://polls.apiblueprint.org/
 
 # VoiceReach
 
-VoiceReach API will allow third party systems to run a VoiceReach dialer session
+The VoiceReach API is a REST-based API designed to allow third-party access and control of VoiceReach capabilities.
+The key goals of this API are:
+*   Provide access to VoiceReach dialing sessions without the need to rely on any persistent long-term data in the VoiceReach 
+*   Allow use of VoiceReach capability without any reliance on VoiceReach User Interfaces
+*   Allow VoiceReach sessions to be scheduled, started, and stopped
+*   Allocate and release needed resources
+*   Provide live and historical status of session activity
+
+## Conference Bridge [/accounts/{account_id}/conferences]
+*   Provides a single end-user access to VoiceReach capabilities
+*   There is one Conference Bridge per end-user
+*   Each Conference Bridge is identified by a unique access code per user -  Bridge Access Code
+*   A Conference Bridge is a long-lived resource that will typically be allocated to an end-user for as long as the end-user has access to the VoiceReach system
+*   Information belonging to the Conference Bridge includes such things as: 
+-   Telephone number
+-   Bridge Access Code
 
 
-## Conference Rooms [/accounts/{account_id}/conferences]
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
 
@@ -14,39 +28,40 @@ VoiceReach API will allow third party systems to run a VoiceReach dialer session
     + id: `a740f9fa-3185-459e-a365-2ed685e023fd` (string) - The GUID of the conference bridge in VoiceReach
     + friendlyname: `+1 (408) 314-7890` (string) - User friendly display format of conference bridge number
     + phonenumber: 14083147890 (number) - The dial-in phone number of conference bridge
-    + access_code: 123456789 (number) - The dial-in access code of conference bridge
-    + call_back_url: `https://mywebapp.com/conference` (string) - The URL that VoiceReach will asynchronous webhook requests to on every call event specified in the call_back_events parameter. URLs must contain a valid hostname (underscores are not permitted)
-    + call_back_events: ["in use","released"] (array[string]) - List of conference events (not in use, in use, released) to use for call backs. If no event is present, VoiceReach will send "in use" by default
+    + bridge_access_code: 123456789 (number) - The dial-in access code of conference bridge
+    + status_callback_url: `https://mywebapp.com/conference` (string) - The URL that VoiceReach will asynchronous webhook requests to on every call event specified in the status_callback_events parameter. URLs must contain a valid hostname (underscores are not permitted)
+    + status_callback_events: ["in use","released"] (array[string]) - List of conference events (not in use, in use, released) to use for call backs. If no event is present, VoiceReach will send "in use" by default
 
-### List All Conference Rooms [GET]
-You may list all conference rooms that you have access to using this action
+### List All Conference Bridges [GET]
+You may list all conference bridges that you have access to using this action
 
 + Response 200 (application/json)
-            [
-                {
-                    "id": "a740f9fa-3185-459e-a365-2ed685e023fd",
-                    "friendlyname": "+1 (408) 314-7890",
-                    "phonenumber": 14083147890,
-                    "access_code": 123456789,
-                    "call_back_url": "https://mywebapp.com/conference"
-                    "call_back_events": ["in use","released"]
-                }
-            ]
 
-### Create a New Conference Room [POST]
+        [
+            {
+                "id": "a740f9fa-3185-459e-a365-2ed685e023fd",
+                "friendlyname": "+1 (408) 314-7890",
+                "phonenumber": 14083147890,
+                "bridge_access_code": 123456789,
+                "status_callback_url": "https://mywebapp.com/conference"
+                "status_callback_events": ["in use","released"]
+            }
+        ]
 
-You may request a new conference room using this action. It takes a JSON object containing session specifications. VoiceReach will check limit of conference rooms and accordingly service this request
+### Create a New Conference Bridge [POST]
+
+You may request a new conference bridge using this action. It takes a JSON object containing session specifications. VoiceReach will check limit of conference bridges and accordingly service this request
 
 + Request (application/json)
     + Attributes
-        + call_back_url: `https://mywebapp.com/conference` (string) - The URL that VoiceReach will asynchronous webhook requests to on every call event specified in the call_back_events parameter. URLs must contain a valid hostname (underscores are not permitted)
-        + call_back_events: ["in use","released"] (array[string]) - List of conference events (not in use, in use, released) to use for call backs.
+        + status_callback_url: `https://mywebapp.com/conference` (string) - The URL that VoiceReach will asynchronous webhook requests to on every call event specified in the status_callback_events parameter. URLs must contain a valid hostname (underscores are not permitted)
+        + status_callback_events: ["in use","released"] (array[string]) - List of conference events (not in use, in use, released) to use for call backs.
 
     + Body
 
             {
-                "call_back_url": "https://mywebapp.com/conference"
-                "call_back_events": ["in use","released"]
+                "status_callback_url": "https://mywebapp.com/conference"
+                "status_callback_events": ["in use","released"]
             }
 
 + Response 201 (application/json)
@@ -61,44 +76,45 @@ You may request a new conference room using this action. It takes a JSON object 
                 "id": "a740f9fa-3185-459e-a365-2ed685e023fd",
                 "friendlyname": "+1 (408) 314-7890",
                 "phonenumber": 14083147890,
-                "access_code": 123456789,
+                "bridge_access_code": 123456789,
                 "status": "not in use"
-                "call_back_url": "https://mywebapp.com/conference"
-                "call_back_events": ["in use","released"]
+                "status_callback_url": "https://mywebapp.com/conference"
+                "status_callback_events": ["in use","released"]
             }
 
-## Conference Room Status [/accounts/{account_id}/conferences/{conference_room_id}]
-You may check status of a conference room using this action. Every time a user has logged in to a conference room, the status will be updated
+## Conference Bridge Status [/accounts/{account_id}/conferences/{conference_bridge_id}]
+You may check status of a conference bridge using this action. Every time a user has logged in to a conference bridge, the status will be updated
 
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
-    + conference_room_id: `a740f9fa-3185-459e-a365-2ed685e023fd` (string) - Conference Room ID
+    + conference_bridge_id: `a740f9fa-3185-459e-a365-2ed685e023fd` (string) - Conference Bridge ID
 
 + Attributes
     + id: `a740f9fa-3185-459e-a365-2ed685e023fd` (string) - The GUID of the conference bridge in VoiceReach
     + friendlyname: `+1 (408) 314-7890` (string) - User friendly display format of conference bridge number
     + phonenumber: 14083147890 (number) - The dial-in phone number of conference bridge
     + access_code: 123456789 (number) - The dial-in access code of conference bridge
-    + call_back_url: `https://mywebapp.com/conference` (string) - The URL that VoiceReach will asynchronous webhook requests to on every call event specified in the call_back_events parameter. URLs must contain a valid hostname (underscores are not permitted)
-    + call_back_events: ["in use","released"] (array[string]) - List of conference events (not in use, in use, released) to use for call backs.
+    + status_callback_url: `https://mywebapp.com/conference` (string) - The URL that VoiceReach will asynchronous webhook requests to on every call event specified in the status_callback_events parameter. URLs must contain a valid hostname (underscores are not permitted)
+    + status_callback_events: ["in use","released"] (array[string]) - List of conference events (not in use, in use, released) to use for call backs.
 
 + Response 200 (application/json)
-            {
-                "id": "a740f9fa-3185-459e-a365-2ed685e023fd",
-                "friendlyname": "+1 (408) 314-7890",
-                "phonenumber": 14083147890,
-                "access_code": 123456789,
-                "status": "in use"
-                "call_back_url": "https://mywebapp.com/conference"
-                "call_back_events": ["in use","released"]
-            }
 
-###  Conference Room Release [PUT]
-You may release a conference room using this action. Once released, a conference room cannot be used to login again. A new conference room will have to be requested.
+        {
+            "id": "a740f9fa-3185-459e-a365-2ed685e023fd",
+            "friendlyname": "+1 (408) 314-7890",
+            "phonenumber": 14083147890,
+            "bridge_access_code": 123456789,
+            "status": "in use"
+            "status_callback_url": "https://mywebapp.com/conference"
+            "status_callback_events": ["in use","released"]
+        }
+
+###  Conference Bridge Release [PUT]
+You may release a conference bridge using this action. Once released, a conference bridge cannot be used to login again. A new conference bridge will have to be requested.
 
 + Attributes
-    + id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - ID of the Conference Room in the form of an GUID
-    + state: start (string) - Control of session (start, stop)
+    + id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - ID of the Conference Bridge in the form of an GUID
+    + action: release (string)
 
 + Request (application/json)
 
@@ -119,14 +135,21 @@ You may release a conference room using this action. Once released, a conference
                 "id": "a740f9fa-3185-459e-a365-2ed685e023fd",
                 "friendlyname": "+1 (408) 314-7890",
                 "phonenumber": 14083147890,
-                "access_code": 123456789,
+                "bridge_access_code": 123456789,
                 "status": "released"
-                "call_back_url": "https://mywebapp.com/conference"
-                "call_back_events": ["in use","released"]
+                "status_callback_url": "https://mywebapp.com/conference"
+                "status_callback_events": ["in use","released"]
             }
 
 ## Sessions [/accounts/{account_id}/sessions]
-This lists all the actions for listing and creating a VoiceReach Session
+*   A session of agent assisted dialing where dialing resources are activated in behalf of the end-user
+*   A user who has dialed into a conference bridge can log into a session by a unique Session Access Code
+*   A session can be started and stopped at specific times or started and stopped on demand
+*   In addition to session information, a session also consists of:
+-   Target list of contacts
+-   Text instructions to the dialing agents
+-   Snapshot of current real-time status
+-   Historical record of dialing interactions
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
 
@@ -137,10 +160,10 @@ This lists all the actions for listing and creating a VoiceReach Session
     + stopped_at: `2016-10-17T10:30:00.000Z` (string)  - Stop date-time of the session
     + state: not_started (string)  - State of the session ["not_started", "started", "stopped"]
     + instructions: `Use this script` (string) - Instructions for the VoiceReach call navigators
-    + access_code: 123456789 (number) - Access code to login to session via VoiceReach conference bridge
+    + session_access_code: 123456789 (number) - Access code to login to session via VoiceReach conference bridge
     + recording: true (string) - Recording flag ["true", "false"]
-    + call_back_url: `https://my.webapp.com/my_app` (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "released" by default. URLs must contain a valid hostname (underscores are not permitted)
-    + call_back_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are queued, connecting, ringing, answered, transferred and completed
+    + status_callback_url: `https://my.webapp.com/my_app` (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the status_callback_events parameter. If no event is present, VoiceReach will send "released" by default. URLs must contain a valid hostname (underscores are not permitted)
+    + status_callback_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are queued, connecting, ringing, answered, transferred and completed
     + caller_id_type: fixed (string) - Method used by VoiceReach to set caller ID (none, fixed, random-select)
     + caller_id: +14087555678 (array[string]) - Caller IDs to be used as per caller_id_type
 
@@ -148,74 +171,75 @@ This lists all the actions for listing and creating a VoiceReach Session
 List all VoiceReach sessions. Use fields to narrow search
 
 + Response 200 (application/json)
-            [
-                {
-                    "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
-                    "created_at": "2016-10-17T08:40:51.620Z",
-                    "started_at": "",
-                    "stopped_at": "",
-                    "state": "not_started",
-                    "instructions": "Use this script",
-                    "access_code": "123-456-789",
-                    "recording": "true",
-                    "call_back_url": "https://my.webapp.com",
-                    "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
-                    "auto_repeat": "true",
-                    "caller_id_type": "fixed",
-                    "caller_id":["+14087555678"],
-                    "stats": {
-                        "dial_attempts": 0,
-                        "live_connects": 0,
-                        "actual_usage_time": 0,
-                        "average_talk_time": 0,
-                        "average_wait_time": 0
-                    }
-                },
-                {
-                    "id": "a740f9fa-3185-459e-a365-2ed685e023fd",
-                    "created_at": "2016-08-05T08:40:51.620Z",
-                    "started_at": "2016-10-17T09:30:00.000Z",
-                    "stopped_at": "",
-                    "state": "running",
-                    "instructions": "Use this script",
-                    "access_code": "123-456-789",
-                    "recording": "false",
-                    "call_back_url": "",
-                    "call_back_events": [],
-                    "auto_repeat": "false",
-                    "caller_id_type": "random-select",
-                    "caller_id":["+14087555678", "+12087555678"],
-                    "stats": {
-                        "dial_attempts": 1,
-                        "live_connects": 1,
-                        "actual_usage_time": 678,
-                        "average_talk_time": 453,
-                        "average_wait_time": 225
-                    }
-                },
-                {
-                    "id": "c73a0c52-fd97-4d69-be08-1cef5b88da66",
-                    "created_at": "2015-08-05T08:40:51.620Z",
-                    "started_at": "2015-08-05T09:30:00.000Z",
-                    "stopped_at": "2015-08-05T10:30:00.000Z",
-                    "state": "stopped",
-                    "instructions": "Use this script",
-                    "access_code": "123-456-789",
-                    "recording": "false",
-                    "call_back_url": "",
-                    "call_back_events": [],
-                    "auto_repeat": "false",
-                    "caller_id_type": "geo-select",
-                    "caller_id":["+14087555678", "+12087555678"],
-                    "stats": {
-                        "dial_attempts": 3,
-                        "live_connects": 1,
-                        "actual_usage_time": 1678,
-                        "average_talk_time": 453,
-                        "average_wait_time": 225
-                    }
+
+        [
+            {
+                "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
+                "created_at": "2016-10-17T08:40:51.620Z",
+                "started_at": "",
+                "stopped_at": "",
+                "state": "not_started",
+                "instructions": "Use this script",
+                "session_access_code": "123-456-789",
+                "recording": "true",
+                "status_callback_url": "https://my.webapp.com",
+                "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
+                "auto_repeat": "true",
+                "caller_id_type": "fixed",
+                "caller_id":["+14087555678"],
+                "stats": {
+                    "dial_attempts": 0,
+                    "live_connects": 0,
+                    "actual_usage_time": 0,
+                    "average_talk_time": 0,
+                    "average_wait_time": 0
                 }
-            ]
+            },
+            {
+                "id": "a740f9fa-3185-459e-a365-2ed685e023fd",
+                "created_at": "2016-08-05T08:40:51.620Z",
+                "started_at": "2016-10-17T09:30:00.000Z",
+                "stopped_at": "",
+                "state": "running",
+                "instructions": "Use this script",
+                "session_access_code": "123-456-789",
+                "recording": "false",
+                "status_callback_url": "",
+                "status_callback_events": [],
+                "auto_repeat": "false",
+                "caller_id_type": "random-select",
+                "caller_id":["+14087555678", "+12087555678"],
+                "stats": {
+                    "dial_attempts": 1,
+                    "live_connects": 1,
+                    "actual_usage_time": 678,
+                    "average_talk_time": 453,
+                    "average_wait_time": 225
+                }
+            },
+            {
+                "id": "c73a0c52-fd97-4d69-be08-1cef5b88da66",
+                "created_at": "2015-08-05T08:40:51.620Z",
+                "started_at": "2015-08-05T09:30:00.000Z",
+                "stopped_at": "2015-08-05T10:30:00.000Z",
+                "state": "stopped",
+                "instructions": "Use this script",
+                "session_access_code": "123-456-789",
+                "recording": "false",
+                "status_callback_url": "",
+                "status_callback_events": [],
+                "auto_repeat": "false",
+                "caller_id_type": "geo-select",
+                "caller_id":["+14087555678", "+12087555678"],
+                "stats": {
+                    "dial_attempts": 3,
+                    "live_connects": 1,
+                    "actual_usage_time": 1678,
+                    "average_talk_time": 453,
+                    "average_wait_time": 225
+                }
+            }
+        ]
 
 ### Create a New Session [POST]
 
@@ -226,8 +250,8 @@ You may create your own session using this action. It takes a JSON object contai
         + instructions: `Use this script` (string) - Instructions for the VoiceReach call navigators
         + access_code: 123456789 (number) - Access code to login to session via VoiceReach conference bridge
         + recording: true (string) - Recording flag ["true", "false"]
-        + call_back_url: `https://my.webapp.com/my_app` (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
-        + call_back_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are queued, connecting, ringing, answered, transferred and completed
+        + status_callback_url: `https://my.webapp.com/my_app` (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the status_callback_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
+        + status_callback_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are queued, connecting, ringing, answered, transferred and completed
         + caller_id_type: fixed (string) - Method used by VoiceReach to set caller ID (none, fixed, random-select)
         + caller_id: +14087555678 (array[string]) - Caller IDs to be used as per caller_id_type
 
@@ -236,8 +260,8 @@ You may create your own session using this action. It takes a JSON object contai
         {
             "instructions": "Use this script",
             "recording": "true",
-            "call_back_url": "https://my.webapp.com",
-            "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
+            "status_callback_url": "https://my.webapp.com",
+            "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
             "auto_repeat": "true",
             "caller_id_type": "random-select",
             "caller_id":["+14087555678", "+12087555678"]
@@ -258,10 +282,10 @@ You may create your own session using this action. It takes a JSON object contai
                 "stopped_at": "",
                 "state": "not_started",
                 "instructions": "Use this script",
-                "access_code": "123-456-789",
+                "session_access_code": "123-456-789",
                 "recording": "true",
-                "call_back_url": "https://my.webapp.com",
-                "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
+                "status_callback_url": "https://my.webapp.com",
+                "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
                 "auto_repeat": "true",
                 "caller_id_type": "random-select",
                 "caller_id":["+14087555678", "+12087555678"],
@@ -291,8 +315,8 @@ The actions on individual sessions are listed here such as getting specific sess
     + instructions: `Use this script` (string) - Instructions for the VoiceReach call navigators
     + access_code: 123456789 (number) - Access code to login to session via VoiceReach conference bridge
     + recording: true (string) - Recording flag ["true", "false"]
-    + call_back_url: `https://my.webapp.com/my_app` (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the call_back_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
-    + call_back_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are queued, connecting, ringing, answered, transferred and completed
+    + status_callback_url: `https://my.webapp.com/my_app` (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the status_callback_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
+    + status_callback_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are queued, connecting, ringing, answered, transferred and completed
     + caller_id_type: fixed (string) - Method used by VoiceReach to set caller ID (none, fixed, random-select)
     + caller_id: +14087555678 (array[string]) - Caller IDs to be used as per caller_id_type
     
@@ -300,28 +324,28 @@ The actions on individual sessions are listed here such as getting specific sess
 
 + Response 200 (application/json)
 
-            {
-                "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
-                "created_at": "2016-10-17T08:40:51.620Z",
-                "started_at": "",
-                "stopped_at": "",
-                "state": "not_started",
-                "instructions": "Use this script",
-                "access_code": "123-456-789",
-                "recording": "true",
-                "call_back_url": "https://my.webapp.com",
-                "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
-                "auto_repeat": "true",
-                "caller_id_type": "random-select",
-                "caller_id":["+14087555678", "+12087555678"],
-                "stats": {
-                    "dial_attempts": 0,
-                    "live_connects": 0,
-                    "actual_usage_time": 0,
-                    "average_talk_time": 0,
-                    "average_wait_time": 0
-                }
+        {
+            "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
+            "created_at": "2016-10-17T08:40:51.620Z",
+            "started_at": "",
+            "stopped_at": "",
+            "state": "not_started",
+            "instructions": "Use this script",
+            "session_access_code": "123-456-789",
+            "recording": "true",
+            "status_callback_url": "https://my.webapp.com",
+            "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
+            "auto_repeat": "true",
+            "caller_id_type": "random-select",
+            "caller_id":["+14087555678", "+12087555678"],
+            "stats": {
+                "dial_attempts": 0,
+                "live_connects": 0,
+                "actual_usage_time": 0,
+                "average_talk_time": 0,
+                "average_wait_time": 0
             }
+        }
 
 ###  Session Control - Start/Stop [PUT]
 Control a session by starting and stopping dialing to the given session by using this.
@@ -352,10 +376,10 @@ Control a session by starting and stopping dialing to the given session by using
                 "stopped_at": "",
                 "state": "started",
                 "instructions": "Use this script",
-                "access_code": "123-456-789",
+                "session_access_code": "123-456-789",
                 "recording": "true",
-                "call_back_url": "https://my.webapp.com",
-                "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
+                "status_callback_url": "https://my.webapp.com",
+                "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
                 "auto_repeat": "true",
                 "caller_id_type": "random-select",
                 "caller_id":["+14087555678", "+12087555678"],
@@ -390,10 +414,10 @@ Control a session by starting and stopping dialing to the given session by using
                 "stopped_at": "2016-10-17T10:30:00.000Z",
                 "state": "stopped",
                 "instructions": "Use this script",
-                "access_code": "123-456-789",
+                "session_access_code": "123-456-789",
                 "recording": "true",
-                "call_back_url": "https://my.webapp.com",
-                "call_back_events": ["queued","connecting","ringing","answered","transferred","completed"],
+                "status_callback_url": "https://my.webapp.com",
+                "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
                 "auto_repeat": "true",
                 "caller_id_type": "random-select",
                 "caller_id":["+14087555678", "+12087555678"],
@@ -407,56 +431,65 @@ Control a session by starting and stopping dialing to the given session by using
             }
 
 
-## Session Prospects [/accounts/{account_id}/sessions/{session_id}/prospects]
-Manage prospects allocated to sessions using these API
+## Session Contacts [/accounts/{account_id}/sessions/{session_id}/contacts]
+Manage contacts allocated to sessions using these API. A contact is:
+*    A person that the dialing agents are attempting to make and that the end-user desires to speak to
+*   Is identified by a unique Contact ID
+*   Contains a variety of information needed by the dialing agents to conduct their introduction conversation. This includes things such as 
+-   Name
+-   Title
+-   Telephone number
+-   Company name
+
 
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
     + session_id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - ID of the Session in the form of an GUID
 
 + Attributes
-    + id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - External Unique ID of prospect
-    + name: `Barbara Thomas` (string) - Full name of prospect
-    + title: CEO (string) - Job title of prospect
+    + id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - External Unique ID of contact
+    + name: `Barbara Thomas` (string) - Full name of contact
+    + title: CEO (string) - Job title of contact
     + phone: [{"number": "+14086795546"}, {"number": "+14086795000", "extension": "x1234"}] (array) - Array of phone numbers; Order of phone numbers provided will be used by VoiceReach call navigators to prioritize which phone number to dial first
     + company: ProviderTrust (string) - Name of company
-    + location: `Cupertino, CA` (string) - Location of prospect
+    + location: `Cupertino, CA` (string) - Location of contact
 
 
-### List All Prospect from a Session [GET]
-List all prospects allocated to a session. You may use fields to narrow the search
+### List All Contact from a Session [GET]
+List all contacts allocated to a session. You may use fields to narrow the search
 
 + Response 200 (application/json)
-            [
-                {
-                    "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
-                    "name": "Barbara Thomas",
-                    "title": "CEO",
-                    "phone": [
-                                {"number": "+14086795546"},
-                                {
-                                    "number": "+14086795500",
-                                    "extension": "1234"
-                                }
-                            ],
-                    "company": "ProviderTrust",
-                    "location": "Cupertino, CA"
-                }, {
-                    "id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
-                    "name": "John Baker",
-                    "title": "Vice President",
-                    "phone": [
-                        {"number": "+12097895546"},
-                        {"number": "+12097895547"},
-                        {"number": "+12097895548"}
-                    ],
-                    "company": "Potomac River Holdings",
-                    "location": "Richmond, Virgina"
-                }
-            ]
 
-### Add Prospects to a Session [POST]
-You may this action to add one or more prospects to a session. Please note that response will always be 201 for a correctly formatted request. Kindly parse through response for individual prospects to verify if prospect was added to session or not. The prospect ID will be used as the unique identifier.
+        [
+            {
+                "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
+                "name": "Barbara Thomas",
+                "title": "CEO",
+                "phone": [
+                            {"number": "+14086795546"},
+                            {
+                                "number": "+14086795500",
+                                "extension": "1234"
+                            }
+                        ],
+                "company": "ProviderTrust",
+                "location": "Cupertino, CA"
+            }, {
+                "id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
+                "name": "John Baker",
+                "title": "Vice President",
+                "phone": [
+                    {"number": "+12097895546"},
+                    {"number": "+12097895547"},
+                    {"number": "+12097895548"}
+                ],
+                "company": "Potomac River Holdings",
+                "location": "Richmond, Virgina"
+            }
+        ]
+
+### Add Contacts to a Session [POST]
+You may this action to add one or more contacts to a session. Please note that response will always be 201 for a correctly formatted request. Kindly parse through response for individual contacts to verify if contact was added to session or not. The contact ID will be used as the unique identifier.
 
 + Request (application/json)
 
@@ -502,7 +535,7 @@ You may this action to add one or more prospects to a session. Please note that 
 
     + Headers
 
-            Location: /accounts/c73a0c52-fd97-4d69-be08-1cef5b88da66/sessions/0f48b8ea-0253-4f1f-be5d-5787e32b34f9/prospects
+            Location: /accounts/c73a0c52-fd97-4d69-be08-1cef5b88da66/sessions/0f48b8ea-0253-4f1f-be5d-5787e32b34f9/contacts
 
     + Body
 
@@ -523,8 +556,8 @@ You may this action to add one or more prospects to a session. Please note that 
             ]
             
 
-### Delete Prospects from a Session [DELETE]
-Use this action to delete prospect from session. Currently only one prospect can be deleted at a time.
+### Delete Contacts from a Session [DELETE]
+Use this action to delete contact from session. Currently only one contact can be deleted at a time.
 
 + Request (application/json)
 
@@ -547,60 +580,60 @@ Retrieve interactions for the given session
     + started_at: `2016-10-17T09:30:00.000Z` (string)  - Start date-time of the session
     + stopped_at: `2016-10-17T10:30:00.000Z` (string)  - Stop date-time of the session
     + status: completed (string)  - Status of the interaction [queued, connecting, ringing, answered, transferred, completed]
-    + prospect_id: `2c4acfd8-b7e5-4406-a0b9-73a3c4576f89` (string) - External Unique ID of prospect
+    + contact_id: `2c4acfd8-b7e5-4406-a0b9-73a3c4576f89` (string) - External Unique ID of contact
     + name: 123456789 (number) - Access code to login to session via VoiceReach conference bridge
-    + title: CEO (string) - Job title of prospect
-    + phone: +14087555678 (string) - Phone number dialed to connect with prospect
+    + title: CEO (string) - Job title of contact
+    + phone: +14087555678 (string) - Phone number dialed to connect with contact
     + company: ProviderTrust (string) - Name of company
-    + location: `Cupertino, CA` (string) - Location of prospect
+    + location: `Cupertino, CA` (string) - Location of contact
 
 ### Get Interactions in a Session [GET]
 Retrieve interactions for a given session
 
 + Response 200 (application/json)
 
-            [
-                {
-                    "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
-                    "type": "live call navigator attempt",
-                    "status": "completed",
-                    "outcome": "no rpc",
-                    "started_at": "2015-08-05T09:31:08.030Z",
-                    "stopped_at": "",
-                    "prospect_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
-                    "name": "Barbara Thomas",
-                    "title": "CEO",
-                    "phone": "+14086795546",
-                    "company": "ProviderTrust",
-                    "location": "Cupertino, CA",
-                }, {
-                    "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
-                    "type": "live call navigator attempt",
-                    "status": "connecting",
-                    "outcome": "",
-                    "started_at": "2015-08-05T09:31:08.030Z",
-                    "stopped_at": "",
-                    "prospect_id": "12280339-9974-423b-98a3-684e80c25097",
-                    "name": "John Clayton",
-                    "title": "CFO",
-                    "phone": "+12126795546",
-                    "company": "Home Run Media",
-                    "location": "Malibu, CA"
-                }, {
-                    "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
-                    "type": "live call navigator attempt",
-                    "status": "answered",
-                    "outcome": "",
-                    "started_at": "2015-08-05T09:31:08.030Z",
-                    "stopped_at": "",
-                    "prospect_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
-                    "name": "John Baker",
-                    "title": "Vice President",
-                    "phone": "+12097895548",
-                    "company": "Potomac River Holdings",
-                    "location": "Richmond, Virgina"
-                }
-            ]
+        [
+            {
+                "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
+                "type": "live call navigator attempt",
+                "status": "completed",
+                "outcome": "no rpc",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "contact_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
+                "name": "Barbara Thomas",
+                "title": "CEO",
+                "phone": "+14086795546",
+                "company": "ProviderTrust",
+                "location": "Cupertino, CA",
+            }, {
+                "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
+                "type": "live call navigator attempt",
+                "status": "connecting",
+                "outcome": "",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "contact_id": "12280339-9974-423b-98a3-684e80c25097",
+                "name": "John Clayton",
+                "title": "CFO",
+                "phone": "+12126795546",
+                "company": "Home Run Media",
+                "location": "Malibu, CA"
+            }, {
+                "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
+                "type": "live call navigator attempt",
+                "status": "answered",
+                "outcome": "",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "contact_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
+                "name": "John Baker",
+                "title": "Vice President",
+                "phone": "+12097895548",
+                "company": "Potomac River Holdings",
+                "location": "Richmond, Virgina"
+            }
+        ]
 
 ## Interactions [/accounts/{account_id}/interactions]
 Retrieve all interactions. Use fields to narrow search
@@ -614,55 +647,55 @@ Retrieve all interactions. Use fields to narrow search
     + started_at: `2016-10-17T09:30:00.000Z` (string)  - Start date-time of the session
     + stopped_at: `2016-10-17T10:30:00.000Z` (string)  - Stop date-time of the session
     + status: completed (string)  - Status of the interaction [queued, connecting, ringing, answered, transferred, completed]
-    + prospect_id: `2c4acfd8-b7e5-4406-a0b9-73a3c4576f89` (string) - External Unique ID of prospect
+    + contact_id: `2c4acfd8-b7e5-4406-a0b9-73a3c4576f89` (string) - External Unique ID of contact
     + name: 123456789 (number) - Access code to login to session via VoiceReach conference bridge
-    + title: CEO (string) - Job title of prospect
-    + phone: +14087555678 (string) - Phone number dialed to connect with prospect
+    + title: CEO (string) - Job title of contact
+    + phone: +14087555678 (string) - Phone number dialed to connect with contact
     + company: ProviderTrust (string) - Name of company
-    + location: `Cupertino, CA` (string) - Location of prospect
+    + location: `Cupertino, CA` (string) - Location of contact
 
 ### Get Interactions [GET]
 + Response 200 (application/json)
 
-            [
-                {
-                    "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
-                    "type": "live call navigator attempt",
-                    "status": "completed",
-                    "outcome": "no rpc",
-                    "started_at": "2015-08-05T09:31:08.030Z",
-                    "stopped_at": "",
-                    "prospect_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
-                    "name": "Barbara Thomas",
-                    "title": "CEO",
-                    "phone": "+14086795546",
-                    "company": "ProviderTrust",
-                    "location": "Cupertino, CA",
-                }, {
-                    "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
-                    "type": "live call navigator attempt",
-                    "status": "connecting",
-                    "outcome": "",
-                    "started_at": "2015-08-05T09:31:08.030Z",
-                    "stopped_at": "",
-                    "prospect_id": "12280339-9974-423b-98a3-684e80c25097",
-                    "name": "Ricardo Lopez",
-                    "title": "CFO",
-                    "phone": "+12126795546",
-                    "company": "Home Run Media",
-                    "location": "Malibu, CA"
-                }, {
-                    "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
-                    "type": "live call navigator attempt",
-                    "status": "answered",
-                    "outcome": "",
-                    "started_at": "2015-08-05T09:31:08.030Z",
-                    "stopped_at": "",
-                    "prospect_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
-                    "name": "John Baker",
-                    "title": "Vice President",
-                    "phone": "+12097895548",
-                    "company": "Potomac River Holdings",
-                    "location": "Richmond, Virgina"
-                }
-            ]
+        [
+            {
+                "id": "323cc917-32f2-4fb0-8f67-0459578cb892",
+                "type": "live call navigator attempt",
+                "status": "completed",
+                "outcome": "no rpc",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "contact_id": "2c4acfd8-b7e5-4406-a0b9-73a3c4576f89",
+                "name": "Barbara Thomas",
+                "title": "CEO",
+                "phone": "+14086795546",
+                "company": "ProviderTrust",
+                "location": "Cupertino, CA",
+            }, {
+                "id": "49f7e246-f6e7-42c7-bf4f-efc8e53ea0ac",
+                "type": "live call navigator attempt",
+                "status": "connecting",
+                "outcome": "",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "contact_id": "12280339-9974-423b-98a3-684e80c25097",
+                "name": "Ricardo Lopez",
+                "title": "CFO",
+                "phone": "+12126795546",
+                "company": "Home Run Media",
+                "location": "Malibu, CA"
+            }, {
+                "id": "5a7badfc-7ed9-4940-8ad4-3b6bab056f31",
+                "type": "live call navigator attempt",
+                "status": "answered",
+                "outcome": "",
+                "started_at": "2015-08-05T09:31:08.030Z",
+                "stopped_at": "",
+                "contact_id": "ba312f03-8d3d-4bbc-9513-3b273a1a7ae9",
+                "name": "John Baker",
+                "title": "Vice President",
+                "phone": "+12097895548",
+                "company": "Potomac River Holdings",
+                "location": "Richmond, Virgina"
+            }
+        ]

@@ -247,15 +247,17 @@ The actions on individual sessions are listed here such as getting specific sess
 ###  Session Control - Start/Stop [PUT]
 Control a session by starting and stopping dialing to the given session by using this.
 
++ Parameters
+    + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
+    + session_id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - ID of the Session
+
 + Attributes
-    + id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - ID of the Session
-    + state: start (string) - Control of session (start, stop)
+    + action: start (string) - Control of session (start, stop)
 
 + Request (application/json)
 
         {
-            "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
-            "state": "start",
+            "action": "start",
         }
 
 + Response 201 (application/json)
@@ -292,8 +294,7 @@ Control a session by starting and stopping dialing to the given session by using
 + Request (application/json)
 
         {
-            "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
-            "state": "stop",
+            "action": "stop",
         }
 
 + Response 201 (application/json)
@@ -460,92 +461,8 @@ Use this action to delete contact from session. Currently only one contact can b
 
 + Response 204
 
-###  Session Control - Start/Stop [PUT]
-Control a session by starting and stopping dialing to the given session by using this.
-
-+ Parameters
-    + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
-    + session_id: `0f48b8ea-0253-4f1f-be5d-5787e32b34f9` (string) - ID of the Session
-
-+ Attributes
-    + action: start (string) - Control of session (start, stop)
-
-+ Request (application/json)
-
-        {
-            "action": "start",
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /accounts/c73a0c52-fd97-4d69-be08-1cef5b88da66/sessions/0f48b8ea-0253-4f1f-be5d-5787e32b34f9
-
-    + Body
-
-            {
-                "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
-                "created_at": "2016-10-17T08:40:51.620Z",
-                "started_at": "2016-10-17T09:30:00.000Z",
-                "stopped_at": "",
-                "state": "started",
-                "instructions": "Use this script",
-                "session_access_code": "123-456-789",
-                "recording": "true",
-                "status_callback_url": "https://my.webapp.com",
-                "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
-                "auto_repeat": "true",
-                "caller_id_type": "random-select",
-                "caller_id":["+14087555678", "+12087555678"],
-                "stats": {
-                    "dial_attempts": 0,
-                    "live_connects": 0,
-                    "actual_usage_time": 0,
-                    "average_talk_time": 0,
-                    "average_wait_time": 0
-                }
-            }
-
-+ Request (application/json)
-
-        {
-            "action": "stop",
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /accounts/c73a0c52-fd97-4d69-be08-1cef5b88da66/sessions/0f48b8ea-0253-4f1f-be5d-5787e32b34f9
-
-    + Body
-
-            {
-                "id": "0f48b8ea-0253-4f1f-be5d-5787e32b34f9",
-                "created_at": "2016-10-17T08:40:51.620Z",
-                "started_at": "2016-10-17T09:30:00.000Z",
-                "stopped_at": "2016-10-17T10:30:00.000Z",
-                "state": "stopped",
-                "instructions": "Use this script",
-                "session_access_code": "123-456-789",
-                "recording": "true",
-                "status_callback_url": "https://my.webapp.com",
-                "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
-                "auto_repeat": "true",
-                "caller_id_type": "random-select",
-                "caller_id":["+14087555678", "+12087555678"],
-                "stats": {
-                    "dial_attempts": 100,
-                    "live_connects": 4,
-                    "actual_usage_time": 59.95,
-                    "average_talk_time": 7.86,
-                    "average_wait_time": 3.14
-                }
-            }
-
 ## Interactions [/accounts/{account_id}/interactions]
-Manage interactions made by end-user as well as call navigator dial attempts.
+Manage live connects and get information on call navigator dial attempts.
 
 + Parameters
     + account_id: `c73a0c52-fd97-4d69-be08-1cef5b88da66` (string) - API Key
@@ -626,7 +543,7 @@ Get all interactions. Use fields to narrow search such as:
             }
         ]
 
-## Interaction [/accounts/{account_id}/interactions/{interaction_id}]
+## Interaction Details [/accounts/{account_id}/interactions/{interaction_id}]
 Manage a specific interaction
 
 ### Get Interaction [GET]

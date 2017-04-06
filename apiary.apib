@@ -50,7 +50,6 @@ List all VoiceReach sessions. Use fields to narrow search
                 "stopped_at": "",
                 "state": "not_started",
                 "instructions": "Use this script",
-                "session_access_code": "123-456-789",
                 "recording": "true",
                 "status_callback_url": "https://my.webapp.com",
                 "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
@@ -78,7 +77,6 @@ List all VoiceReach sessions. Use fields to narrow search
                 "stopped_at": "",
                 "state": "running",
                 "instructions": "Use this script",
-                "session_access_code": "123-456-789",
                 "recording": "false",
                 "status_callback_url": "",
                 "status_callback_events": [],
@@ -106,7 +104,6 @@ List all VoiceReach sessions. Use fields to narrow search
                 "stopped_at": "2015-08-05T10:30:00.000Z",
                 "state": "stopped",
                 "instructions": "Use this script",
-                "session_access_code": "123-456-789",
                 "recording": "false",
                 "status_callback_url": "",
                 "status_callback_events": [],
@@ -139,7 +136,7 @@ You may create your own session using this action. It takes a JSON object contai
         + recording: true (string) - Recording flag ["true", "false"]
         + status_callback_url: `https://my.webapp.com/my_app` (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the status_callback_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
         + status_callback_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are queued, connecting, ringing, answered, transferred and completed
-        + caller_id_type: fixed (string) - Method used by VoiceReach to set caller ID (none, fixed, random-select)
+        + caller_id_type: fixed (string) - Method used by VoiceReach to set caller ID (none, fixed, random, random-select)
         + caller_id: +14087555678 (array[string]) - Caller IDs to be used as per caller_id_type
 
     + Body
@@ -169,7 +166,6 @@ You may create your own session using this action. It takes a JSON object contai
                 "stopped_at": "",
                 "state": "not_started",
                 "instructions": "Use this script",
-                "session_access_code": "123-456-789",
                 "recording": "true",
                 "status_callback_url": "https://my.webapp.com",
                 "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
@@ -206,7 +202,6 @@ The actions on individual sessions are listed here such as getting specific sess
     + stopped_at: `2016-10-17T10:30:00.000Z` (string)  - Stop date-time of the session
     + state: not_started (string)  - State of the session ["not_started", "started", "stopped"]
     + instructions: `Use this script` (string) - Instructions for the VoiceReach call navigators
-    + access_code: 123456789 (number) - Access code to login to session via VoiceReach conference bridge
     + recording: true (string) - Recording flag ["true", "false"]
     + status_callback_url: `https://my.webapp.com/my_app` (string) - A URL that VoiceReach will send asynchronous webhook requests to on every call event specified in the status_callback_events parameter. If no event is present, VoiceReach will send "completed" by default. URLs must contain a valid hostname (underscores are not permitted)
     + status_callback_events: ["transferred","completed"] (array[string]) - The call progress events that VoiceReach will send webhooks on. Available values are queued, connecting, ringing, answered, transferred and completed
@@ -222,7 +217,6 @@ The actions on individual sessions are listed here such as getting specific sess
             "stopped_at": "",
             "state": "not_started",
             "instructions": "Use this script",
-            "session_access_code": "123-456-789",
             "recording": "true",
             "status_callback_url": "https://my.webapp.com",
             "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
@@ -275,7 +269,6 @@ Control a session by starting and stopping dialing to the given session by using
                 "stopped_at": "",
                 "state": "started",
                 "instructions": "Use this script",
-                "session_access_code": "123-456-789",
                 "recording": "true",
                 "status_callback_url": "https://my.webapp.com",
                 "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],
@@ -312,7 +305,6 @@ Control a session by starting and stopping dialing to the given session by using
                 "stopped_at": "2016-10-17T10:30:00.000Z",
                 "state": "stopped",
                 "instructions": "Use this script",
-                "session_access_code": "123-456-789",
                 "recording": "true",
                 "status_callback_url": "https://my.webapp.com",
                 "status_callback_events": ["queued","connecting","ringing","answered","transferred","completed"],

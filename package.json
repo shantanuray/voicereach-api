@@ -1,0 +1,33 @@
+{
+  "name": "voicereach-api",
+  "version": "1.0.0",
+  "description": "Web API serve to access voicereach system.",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "test-coverage": "npm test && istanbul cover node_modules/mocha/bin/_mocha -- -R spec",
+    "install-local": "npm install -g mocha & npm install -g node-inspector & npm install",
+    "start": "node server.js 1 prod 127.0.0.1 3000 9000",
+    "debug": "node-debug server.js 0 dev 127.0.0.1 3000 9000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:shantanuray/voicereach-api.git"
+  },
+  "keywords": [
+    "none"
+  ],
+  "author": "Nexsales Innovation Team",
+  "license": "",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "sinon": "^2.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cluster-service": "^2.0.0",
+    "express": "^4.15.2"
+  }
+}

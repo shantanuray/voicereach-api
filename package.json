@@ -28,6 +28,9 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "cluster-service": "^2.0.0",
-    "express": "^4.15.2"
+    "convict": "^3.0.0",
+    "express": "^4.15.2",
+    "morgan": "^1.8.1",
+    "nodeUtility": "git+https://3598afed0cd8a525c99419ce9f3886b7c1a910b3:x-oauth-basic@github.com/nexsalesdev/nodeUtility.git#v2.0.0"
   }
 }

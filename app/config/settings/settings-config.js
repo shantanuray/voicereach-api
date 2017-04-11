@@ -1,9 +1,18 @@
 var os = require('os');
 var commandLineArgs = process.argv;
+var nodeUtility    = require('nodeUtility');
+// This module initializes the sessionManager Web API with the required configuration.
+var mainConfig = require('./main');
+// Load configuration from the configuration system
+var appConfig = new nodeUtility.AppConfig({config:mainConfig}, true);
 
 function SettingsConfig() {
   this.settings = {};
+  this.settings = appConfig.config;
+  this.logger = appConfig.logger;
+  this.consoleLogger = appConfig.consoleLogger;
 
+  //initializeSettings(this.settings, this.logger);
   initializeSettings(this.settings);
 }
 
@@ -15,7 +24,7 @@ function initializeSettings(settings) {
 
 function createArgumentSettings(settings) {
   settings.clusterEnabled = commandLineArgs[2] ? parseInt(commandLineArgs[2]) : 0;
-  settings.environment = commandLineArgs[3] ? commandLineArgs[3].toLowerCase() : 'prod';
+  settings.environment = commandLineArgs[3] ? commandLineArgs[3].toLowerCase() : 'local';
   settings.hostName = commandLineArgs[4] ? commandLineArgs[4] : '127.0.0.1';
   settings.masterPort =  commandLineArgs[5] ? parseInt(commandLineArgs[5]) : 3000;
   settings.workerPort =  commandLineArgs[6] ? parseInt(commandLineArgs[6]) : 9000;

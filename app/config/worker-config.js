@@ -3,6 +3,9 @@ var express = require('express');
 var application = express();
 var bodyParser = require('body-parser');
 var routeConfig = require('./route-config');
+var compression = require('compression');
+var morgan = require('morgan');
+
 var settingsConfig = require('./settings/settings-config');
 
 function configureWorker(application) {
@@ -13,8 +16,13 @@ function configureWorker(application) {
 }
 
 function configureApplication(application) {
+  application.use(compression());
   application.use(bodyParser.json());
-
+  if (settingsConfig.settings.environment === 'prod') {
+      application.use(morgan('combined'));
+  } else {
+      application.use(morgan('dev'));
+  }
   application.use(function(req, res, next) {
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.set('Pragma', 'no-cache');
